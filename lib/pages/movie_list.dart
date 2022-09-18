@@ -1,32 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:movie_apps/service/http_service.dart';
+
 import 'movie_detail.dart';
 
 class MovieList extends StatefulWidget {
-  const MovieList({super.key});
+  const MovieList({Key? key}) : super(key: key);
+
   @override
-  MovieListState createState() => MovieListState();
+  _MovieListState createState() => _MovieListState();
 }
 
-class MovieListState extends State<MovieList> {
+class _MovieListState extends State<MovieList> {
   late int moviesCount;
   late List movies;
   late HttpService service;
-  // String result = "";
-  // late HttpService service;
+  bool _isLoading = true;
 
   Future initialize() async {
-    movies = [];
-    movies = (await service.getPopularMovies())!;
-    setState(() {
-      moviesCount = movies.length;
-      movies = movies;
-    });
+    service.getPopularMovies().then((value) => {
+          setState(() {
+            movies = value!;
+            moviesCount = movies.length;
+            _isLoading = false;
+          })
+        });
   }
 
   @override
   void initState() {
-    moviesCount = 1;
     service = HttpService();
     initialize();
     super.initState();
@@ -36,28 +37,32 @@ class MovieListState extends State<MovieList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Movies"),
+        title: const Text("Popular Movies"),
       ),
-      body: ListView.builder(
-        itemCount: moviesCount,
-        itemBuilder: (BuildContext context, int position) => Expanded(
-          child: Card(
-            color: Colors.white,
-            elevation: 2.0,
-            child: ListTile(
-              title: Text(movies[position].title),
-              subtitle: Text(
-                'Rating = ' + movies[position].voteAverage.toString(),
-              ),
-              onTap: () {
-                MaterialPageRoute route = MaterialPageRoute(
-                    builder: (_) => MovieDetail(movies[position]));
-                Navigator.push(context, route);
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView.builder(
+              itemCount: (moviesCount == null) ? 0 : moviesCount,
+              itemBuilder: (context, int pos) {
+                return Card(
+                  color: Colors.white,
+                  elevation: 2.0,
+                  child: ListTile(
+                    title: Text(movies[pos].title),
+                    subtitle:
+                        Text('Rating: ' + movies[pos].voteAverage.toString()),
+                        onTap: (){
+                          MaterialPageRoute route = MaterialPageRoute(
+                            builder: (_) => MovieDetail(movie: movies[pos])
+                          );
+                          Navigator.push(context, route);
+                        },
+                  ),
+                );
               },
             ),
-          ),
-        ),
-      ),
     );
   }
 }

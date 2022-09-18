@@ -5,7 +5,9 @@ class MovieDetail extends StatelessWidget {
   final Movie movie;
   final String imgPath = 'https://image.tmdb.org/t/p/w500/';
 
-  MovieDetail(this.movie);
+  const MovieDetail({Key? key, required this.movie}) : super(key: key);
+
+  
   
   @override
   Widget build(BuildContext context) {

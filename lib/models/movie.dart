@@ -10,8 +10,8 @@ class Movie {
   Movie.fromJson(Map<String, dynamic> parsedJson) {
     id = parsedJson['id'];
     title = parsedJson['title'];
-    voteAverage = parsedJson['voteAverage'] * 1.0;
+    voteAverage = parsedJson['vote_average'];
     overview = parsedJson['overview'];
-    posterPath = parsedJson['posterPath'];
+    posterPath = parsedJson['poster_path'];
   }
 }

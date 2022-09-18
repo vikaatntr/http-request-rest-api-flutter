@@ -1,16 +1,12 @@
-# movie_apps
+# movie_apps | Pertemuan ke 24
 
 A new Flutter project.
 
-## Getting Started
+## Praktikum 1: Mengkoneksikan Aplikasi Flutter ke themoviedb dengan package http
 
-This project is a starting point for a Flutter application.
+1. Untuk mengakses internet kita harus menambahkan permission internet pada android
+manifest cari lah file android manifest.xml pada folder
 
-A few resources to get you started if this is your first Flutter project:
+![Screenshoot movie_apps](images/p24_1.png)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2. Mengubah MyHomePage menjadi stateless widget.
